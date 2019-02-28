@@ -15,6 +15,8 @@ const app = new Clarifai.App({
   apiKey: 'MY KEY'
  });
 
+ 
+
 const particlesOptions = {
   particles: {
     number: {
