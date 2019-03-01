@@ -38,7 +38,9 @@ class Register extends React.Component {
     })
     .then(response => response.json())
     .then(user => {
-      if(user){
+      //'incorrect form submission' is not empty string, so use user.id instead of user for conditional check
+      //console.log(user);
+      if(user.id){
         this.props.loadUser(user);
         this.props.onRouteChange('home');
       }
