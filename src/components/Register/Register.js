@@ -27,7 +27,7 @@ class Register extends React.Component {
 
   onSubmitSignIn = () => {
     //console.log(this.state);
-    fetch('http://localhost:3000/register', {
+    fetch('https://rocky-falls-52063.herokuapp.com/register', {
       method: 'post',
       headers: {'Content-type': 'application/json'},
       body: JSON.stringify({
@@ -39,7 +39,7 @@ class Register extends React.Component {
     .then(response => response.json())
     .then(user => {
       //'incorrect form submission' is not empty string, so use user.id instead of user for conditional check
-      //user => {id,name, email, entries, join}
+      //user object: {id:, name:, email:, entries:, joined:}
       console.log(user);
       if(user.id){
         this.props.loadUser(user);

@@ -4,10 +4,10 @@ import './ImageLinkForm.css';
 const ImageLinkForm = ({onInputChange, onButtonSubmit}) => {
   return (
     <div>
-      <p className='f3'>
-        {'1.Paste the url of the photo you want to detect'}
+      <p className='tc f3'>
+        {'1.Paste the url of the photo'}
         <br/>
-        {'2.Find where your face is by clicking Detect button'}
+        {'2.Click the Detect button'}
       </p>
       <div className='center'>
         <div className='center pa4 br3 shadow-5 form'>
