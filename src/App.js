@@ -38,7 +38,7 @@ const initialState = {
     id: '',
     name: '',
     email: '',
-    entries: 0,
+    //entries: 0,
     joined: ''
   }
 };
@@ -55,7 +55,7 @@ class App extends Component {
         id: data.id,
         name: data.name,
         email: data.email,
-        entries: data.entries,
+        //entries: data.entries,
         joined: data.joined
       }
     });
@@ -80,7 +80,6 @@ class App extends Component {
   }
 
   onInputChange = (event) => {
-    //console.log(event.target.value);
     this.setState({input: event.target.value});
   }
 
@@ -94,11 +93,11 @@ class App extends Component {
   }
   
   //For Detect button in homepage
-  //send image URL and data to Clarifai after pressing Detect Button
+ 
   onButtonSubmit = () =>{
-    //console.log('click');
+    //send image URL and data to Server
     this.setState({imageUrl: this.state.input});
-      fetch('https://rocky-falls-52063.herokuapp.com/imageurl', {
+      fetch('http://localhost:3000/imageurl', {
         method: 'post',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
@@ -107,22 +106,24 @@ class App extends Component {
       })
       .then(response => response.json())
       .then(response => {
-        if(response) {
-          fetch('https://rocky-falls-52063.herokuapp.com/image', {
-            method: 'put',
-            headers: {'Content-type': 'application/json'},
-            body: JSON.stringify({
-                id: this.state.user.id
-            })
-          })
-          .then(response => response.json())
-          .then(count => {
-            this.setState(Object.assign(this.state.user, { entries: count }))
-          })
-          .catch(console.log)
+        // if(response) {
+        //   fetch('http://localhost:3000/image', {
+        //     method: 'put',
+        //     headers: {'Content-type': 'application/json'},
+        //     body: JSON.stringify({
+        //         id: this.state.user.id
+        //     })
+        //   })
+        //   .then(response => response.json())
+        //   .then(count => {
+        //     this.setState(Object.assign(this.state.user, { entries: count }))
+        //   })
+        //   .catch(console.log)
 
+        // }
+        if(response){
+          this.displayFaceBox(this.calculateFaceLocation(response));
         }
-        this.displayFaceBox(this.calculateFaceLocation(response))
       })
       .catch(err => console.log(err));
   }
@@ -139,7 +140,7 @@ class App extends Component {
           route === 'home'
           ? <div>
               <Logo />
-              <Rank name={this.state.user.name} entries={this.state.user.entries}/>
+              <Rank name={this.state.user.name}/>
               <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
               <FaceRecognition imageUrl={imageUrl} box={box} />
             </div>
@@ -149,20 +150,10 @@ class App extends Component {
               : <Register loadUser={this.loadUser} onRouteChange={this.onRouteChange} />
 
             )
-          /*
-          this.state.route === 'signin'
-          ? <Signin onRouteChange={this.onRouteChange}/> 
-          :<div>
-            <Logo />
-            <Rank />
-            <ImageLinkForm onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit} />
-            <FaceRecognition imageUrl={this.state.imageUrl} box={this.state.box} />
-          </div>
-          */
         }
 
       </div>
-      //wrap multiple Components by <div> in ternary condition expression
+      
     );
   }
 }
