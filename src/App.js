@@ -99,7 +99,7 @@ class App extends Component {
     this.setState({box: {}});
     this.setState({imageUrl: this.state.input});
     //https://rocky-falls-52063.herokuapp.com/imageurl
-      fetch('http://localhost:3000/imageurl', {
+      fetch('https://rocky-falls-52063.herokuapp.com/imageurl', {
         method: 'post',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
