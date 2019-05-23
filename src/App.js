@@ -19,15 +19,8 @@ const particlesOptions = {
       }
     }
   }
-}
-/* 
-state:
-input: user input
-imageUrl => the URL of image
-box => faceRecognition box
-route => represents where we are
-isSignedIn => check if the user is signIn or snot
-*/
+};
+
 const initialState = {
   input: '',
   imageUrl: '',
@@ -44,8 +37,8 @@ const initialState = {
 };
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = initialState;
   }
 
@@ -59,7 +52,7 @@ class App extends Component {
         joined: data.joined
       }
     });
-  }
+  };
 
   //calculate four corner points by values returned from Clarifai API
   calculateFaceLocation = (data) => {
@@ -73,15 +66,15 @@ class App extends Component {
       rightCol: width - (clarifaiFace.right_col * width),
       bottomRow: height - (clarifaiFace.bottom_row * height)
     }
-  }
+  };
   //set box state
   displayFaceBox = (box) => {
     this.setState({box: box});
-  }
+  };
 
   onInputChange = (event) => {
     this.setState({input: event.target.value});
-  }
+  };
 
   onRouteChange = (route) => {
     if(route === 'signout'){
@@ -90,7 +83,7 @@ class App extends Component {
       this.setState({isSignedIn: true});
     }
     this.setState({route: route});
-  }
+  };
   
   //For Detect button in homepage
  
@@ -99,7 +92,7 @@ class App extends Component {
     this.setState({box: {}});
     this.setState({imageUrl: this.state.input});
       fetch('https://rocky-falls-52063.herokuapp.com/imageurl', {
-        method: 'post',
+        method: 'POST',
         headers: {'Content-type': 'application/json'},
         body: JSON.stringify({
             input: this.state.input
@@ -112,7 +105,7 @@ class App extends Component {
         }
       })
       .catch(err => console.log(err));
-  }
+  };
 
   render() {
     const { isSignedIn, route, imageUrl, box } = this.state;
